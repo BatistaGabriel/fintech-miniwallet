@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Fintech.MiniWallet.Api/Fintech.MiniWallet.Api.csproj" />
+    <Project Path="src/Fintech.MiniWallet.Application/Fintech.MiniWallet.Application.csproj" />
+    <Project Path="src/Fintech.MiniWallet.Domain/Fintech.MiniWallet.Domain.csproj" />
+    <Project Path="src/Fintech.MiniWallet.Infrastructure/Fintech.MiniWallet.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Fintech.MiniWallet.IntegrationTests/Fintech.MiniWallet.IntegrationTests.csproj" />
+    <Project Path="tests/Fintech.MiniWallet.UnitTests/Fintech.MiniWallet.UnitTests.csproj" />
+  </Folder>
+</Solution>
