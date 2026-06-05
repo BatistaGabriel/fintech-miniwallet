@@ -6,7 +6,7 @@ namespace Fintech.MiniWallet.UnitTests.Domain.ValueObjects;
 public class MoneyTests
 {
     [Fact]
-    public void Should_Throw_If_Money_Is_Negative()
+    public void Should_Throw_ArgumentException_When_Value_Is_Negative()
     {
         Action act = () => new Money(-10m);
         act.Should().Throw<ArgumentException>();
@@ -22,7 +22,7 @@ public class MoneyTests
     }
 
     [Fact]
-    public void Should_Return_The_Sum_Of_Two_Money_Values()
+    public void Should_Return_Sum_When_Adding_Two_Money_Values()
     {
         Money primaryMoney = new Money(10m);
         Money secondaryMoney = new Money(20m);
