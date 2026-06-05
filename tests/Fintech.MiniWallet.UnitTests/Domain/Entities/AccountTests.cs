@@ -10,7 +10,7 @@ public class AccountTests
     public void Should_Have_Zero_Balance_When_Account_Is_Created()
     {
         Account account = AccountInitializer(new AccountObject());
-        
+
         account.Balance.Should().Be(new Money(0));
     }
 
@@ -21,10 +21,10 @@ public class AccountTests
         string accountDocument = "12345678900";
 
         AccountObject accountObject = new AccountObject();
-        accountObject.Holder = new AccountHolder{Name = accountHolderName, Document = accountDocument};
+        accountObject.Holder = new AccountHolder { Name = accountHolderName, Document = accountDocument };
 
         Account account = AccountInitializer(accountObject);
-        
+
         account.Holder.Name.Should().Be(accountHolderName);
     }
 
@@ -97,9 +97,9 @@ public class AccountTests
 
     private Account AccountInitializer(AccountObject accountObject)
     {
-        Account initializedAccount = new Account {Holder = accountObject.Holder};
+        Account initializedAccount = new Account { Holder = accountObject.Holder };
 
-        if(accountObject.Balance.Amount > 0)
+        if (accountObject.Balance.Amount > 0)
             initializedAccount.Deposit(accountObject.Balance);
 
         return initializedAccount;
@@ -108,6 +108,6 @@ public class AccountTests
 
 public class AccountObject
 {
-    public AccountHolder Holder {get; set;} = new AccountHolder { Name = "Unknown", Document = "12345678900" };
-    public Money Balance {get; set;} = new Money(0);
+    public AccountHolder Holder { get; set; } = new AccountHolder { Name = "Unknown", Document = "12345678900" };
+    public Money Balance { get; set; } = new Money(0);
 }

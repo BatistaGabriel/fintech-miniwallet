@@ -1,0 +1,29 @@
+name: ci
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  build-test-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Restore
+        run: dotnet restore Fintech.MiniWallet.slnx
+
+      - name: Build
+        run: dotnet build Fintech.MiniWallet.slnx --configuration Release --no-restore
+
+      - name: Test
+        run: dotnet test Fintech.MiniWallet.slnx --configuration Release --no-build
+
+      - name: Format
+        run: dotnet format Fintech.MiniWallet.slnx --verify-no-changes --verbosity minimal

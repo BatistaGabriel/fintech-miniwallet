@@ -1,0 +1,25 @@
+repos:
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.18.4
+    hooks:
+      - id: gitleaks
+  - repo: local
+    hooks:
+      - id: dotnet-format
+        name: dotnet format
+        entry: dotnet format Fintech.MiniWallet.slnx --verify-no-changes --verbosity minimal
+        language: system
+        pass_filenames: false
+        stages: [pre-commit]
+      - id: dotnet-build
+        name: dotnet build
+        entry: dotnet build Fintech.MiniWallet.slnx --configuration Release --no-restore
+        language: system
+        pass_filenames: false
+        stages: [pre-push]
+      - id: dotnet-test
+        name: dotnet test
+        entry: dotnet test Fintech.MiniWallet.slnx --configuration Release --no-build
+        language: system
+        pass_filenames: false
+        stages: [pre-push]

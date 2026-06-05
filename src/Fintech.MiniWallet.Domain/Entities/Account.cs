@@ -4,9 +4,9 @@ namespace Fintech.MiniWallet.Domain.Entities;
 
 public class Account
 {
-    public Guid Id {get; init;} = Guid.NewGuid();
-    public required AccountHolder Holder {get; init;}
-    public Money Balance {get; private set;} = new Money(0);
+    public Guid Id { get; init; } = Guid.NewGuid();
+    public required AccountHolder Holder { get; init; }
+    public Money Balance { get; private set; } = new Money(0);
     private readonly List<Transaction> _transactions = new();
     public IReadOnlyCollection<Transaction> Transactions => _transactions.AsReadOnly();
 
@@ -56,7 +56,7 @@ public class Account
 
     private static void ValidateTransactionValue(Money transactionValue)
     {
-        if(transactionValue.Amount <= 0)
+        if (transactionValue.Amount <= 0)
         {
             throw new ArgumentException("Transaction value must be greater than zero.");
         }
@@ -64,7 +64,7 @@ public class Account
 
     private static void ValidateBalanceTransactionAvailability(Money transactionValue, Money balance)
     {
-        if(transactionValue.Amount > balance.Amount)
+        if (transactionValue.Amount > balance.Amount)
         {
             throw new ArgumentException("Insuficient funds, check your balance and try again.");
         }
