@@ -2,7 +2,7 @@ namespace Fintech.MiniWallet.Domain.Enums;
 
 public enum TransactionType
 {
-    Deposit, 
+    Deposit,
     Transfer,
     Withdraw
 }
