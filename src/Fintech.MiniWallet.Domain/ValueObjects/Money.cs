@@ -14,4 +14,7 @@ public record Money
 
     public static Money operator + (Money first, Money second)
         => new (first.Amount + second.Amount);
+
+    public static Money operator - (Money first, Money second)
+        => new (first.Amount - second.Amount);
 }

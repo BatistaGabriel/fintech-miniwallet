@@ -1,3 +1,4 @@
+using Fintech.MiniWallet.Domain.Entities;
 using Fintech.MiniWallet.Domain.ValueObjects;
 using FluentAssertions;
 
@@ -17,18 +18,19 @@ public class AccountTests
     public void Should_Have_An_Account_Holder_When_Account_Is_Created()
     {
         string accountHolderName = "Jhon Doe";
+        string accountDocument = "12345678900";
+
         AccountObject accountObject = new AccountObject();
-        accountObject.AccountHolderName = accountHolderName;
+        accountObject.Holder = new AccountHolder{Name = accountHolderName, Document = accountDocument};
 
         Account account = AccountInitializer(accountObject);
         
-        account.Holder.Should().Be(accountHolderName);
+        account.Holder.Name.Should().Be(accountHolderName);
     }
 
     [Fact]
     public void Should_Increase_Balance_When_Depositing()
     {
-        AccountObject accountObject = new AccountObject();
         Account account = AccountInitializer(new AccountObject());
 
         Money firstValueToDeposit = new Money(10m);
@@ -95,8 +97,10 @@ public class AccountTests
 
     private Account AccountInitializer(AccountObject accountObject)
     {
-        Account initializedAccount = new Account(accountObject.AccountHolderName);
-        initializedAccount.Deposit(accountObject.Balance);
+        Account initializedAccount = new Account {Holder = accountObject.Holder};
+
+        if(accountObject.Balance.Amount > 0)
+            initializedAccount.Deposit(accountObject.Balance);
 
         return initializedAccount;
     }
@@ -104,6 +108,6 @@ public class AccountTests
 
 public class AccountObject
 {
-    public string AccountHolderName {get; set;} = "Unknown";
+    public AccountHolder Holder {get; set;} = new AccountHolder { Name = "Unknown", Document = "12345678900" };
     public Money Balance {get; set;} = new Money(0);
 }
