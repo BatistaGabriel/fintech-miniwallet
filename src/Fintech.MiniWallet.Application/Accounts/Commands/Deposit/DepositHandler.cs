@@ -14,11 +14,11 @@ public class DepositHandler : IRequestHandler<DepositCommand, Unit>
     {
         _repository = accountRepository;
     }
-    
+
     public async Task<Unit> Handle(DepositCommand request, CancellationToken cancellationToken)
     {
         var account = await _repository.GetByIdAsync(request.AccountId, cancellationToken) ?? throw new InvalidOperationException("Something is wrong with the informed account, try again.");
-        
+
         account.Deposit(new Money(request.Amount));
         await _repository.UpdateAsync(account, cancellationToken);
 

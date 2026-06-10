@@ -40,8 +40,8 @@ public class TransferHandlerTests
             }
         };
 
-        _repository.GetByIdAsync(originAccount.Id,Arg.Any<CancellationToken>()).Returns(originAccount);
-        _repository.GetByIdAsync(destinationAccount.Id,Arg.Any<CancellationToken>()).Returns(destinationAccount);
+        _repository.GetByIdAsync(originAccount.Id, Arg.Any<CancellationToken>()).Returns(originAccount);
+        _repository.GetByIdAsync(destinationAccount.Id, Arg.Any<CancellationToken>()).Returns(destinationAccount);
 
         var command = new TransferCommand(originAccount.Id, destinationAccount.Id, 50m);
 
@@ -50,7 +50,7 @@ public class TransferHandlerTests
         originAccount.Balance.Should().Be(new Money(50m));
         destinationAccount.Balance.Should().Be(new Money(50m));
 
-        await _repository.Received(1).UpdateAsync(originAccount,Arg.Any<CancellationToken>());
-        await _repository.Received(1).UpdateAsync(destinationAccount,Arg.Any<CancellationToken>());
+        await _repository.Received(1).UpdateAsync(originAccount, Arg.Any<CancellationToken>());
+        await _repository.Received(1).UpdateAsync(destinationAccount, Arg.Any<CancellationToken>());
     }
 }
