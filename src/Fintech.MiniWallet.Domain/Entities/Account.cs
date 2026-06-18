@@ -7,7 +7,7 @@ public class Account
     public Guid Id { get; init; } = Guid.NewGuid();
     public required AccountHolder Holder { get; init; }
     public Money Balance { get; private set; } = new Money(0);
-    private readonly List<Transaction> _transactions = new();
+    private List<Transaction> _transactions = new();
     public IReadOnlyCollection<Transaction> Transactions => _transactions.AsReadOnly();
 
     public void Deposit(Money value)
