@@ -21,6 +21,14 @@ public class AccountRepository : IAccountRepository
             .FirstOrDefaultAsync(a => a.Id == id, cancellationToken);
     }
 
+    public async Task<Account> AddAsync(Account account, CancellationToken cancellationToken)
+    {
+        await _context.AddAsync(account, cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);
+
+        return account;
+    }
+
     public async Task UpdateAsync(Account account, CancellationToken cancellationToken)
     {
         foreach (var transaction in account.Transactions)

@@ -13,6 +13,7 @@ public class AccountRepositoryTests : IAsyncLifetime
     private readonly PostgreSqlContainer _postgres = new PostgreSqlBuilder("postgres:16-alpine").Build();
 
     private MiniWalletDbContext _context = null!;
+    private AccountRepository _repository = null!;
 
     public async Task DisposeAsync() => await _postgres.DisposeAsync();
 
@@ -27,6 +28,7 @@ public class AccountRepositoryTests : IAsyncLifetime
             .Options;
 
         _context = new MiniWalletDbContext(options);
+        _repository = new AccountRepository(_context);
 
         await _context.Database.EnsureCreatedAsync();
     }
@@ -34,19 +36,16 @@ public class AccountRepositoryTests : IAsyncLifetime
     [Fact]
     public async Task Should_Persist_Account_And_Update_Balance()
     {
-        var repository = new AccountRepository(_context);
-
         Account account = AccountInitializer(new AccountObject());
 
-        _context.Accounts.Add(account);
-        await _context.SaveChangesAsync();
+        await _repository.AddAsync(account, CancellationToken.None);
 
         account.Deposit(new Money(100m));
-        await repository.UpdateAsync(account, CancellationToken.None);
+        await _repository.UpdateAsync(account, CancellationToken.None);
 
         _context.ChangeTracker.Clear();
 
-        var result = await repository.GetByIdAsync(account.Id, CancellationToken.None);
+        var result = await _repository.GetByIdAsync(account.Id, CancellationToken.None);
         result.Should().NotBeNull();
         result!.Balance.Should().Be(new Money(100m));
     }
